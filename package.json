@@ -1,0 +1,11 @@
+{
+  "name": "PROGRAMMING-JS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/eternalclash/PROGRAMMING-JS.git",
+  "author": "eternalclash <suchasucha@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.5.2"
+  }
+}
