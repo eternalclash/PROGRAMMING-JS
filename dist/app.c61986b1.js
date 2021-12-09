@@ -117,9 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"app.js":[function(require,module,exports) {
-function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
-
+})({"app.ts":[function(require,module,exports) {
 var container = document.getElementById('root');
 var ajax = new XMLHttpRequest();
 var content = document.createElement('div');
@@ -151,7 +149,7 @@ function newsFeed() {
   var template = "\n  <div class=\"bg-gray-600 min-h-screen\">\n  <div class=\"bg-white text-xl\">\n    <div class=\"mx-auto px-4\">\n      <div class=\"flex justify-between items-center py-6\">\n        <div class=\"flex justify-start\">\n          <h1 class=\"font-extrabold\">Hacker News</h1>\n        </div>\n        <div class=\"items-center justify-end\">\n          <a href=\"#/page/{{__prev_page__}}\" class=\"text-gray-500\">\n            Previous\n          </a>\n          <a href=\"#/page/{{__next_page__}}\" class=\"text-gray-500 ml-4\">\n            Next\n          </a>\n        </div>\n      </div> \n    </div>\n  </div>\n  <div class=\"p-4 text-2xl text-gray-700\">\n    {{__news_feed__}}        \n  </div>\n</div>\n  ";
 
   if (newsFeed.length === 0) {
-    store.feeds = makeFeeds(getData(NEWS_URL)), _readOnlyError("newsFeed");
+    newsFeed = store.feeds = makeFeeds(getData(NEWS_URL));
   }
 
   for (var i = (store.currentPage - 1) * 10; i < store.currentPage * 10; i++) {
@@ -166,7 +164,6 @@ function newsFeed() {
 }
 
 function newsDetail() {
-  //기사의 디테일 보여주는 페이지
   var id = location.hash.substr(7); //id를 substr를 통해 찾음
 
   var newsContent = getData(CONTENT_URL.replace('@id', id));
@@ -179,15 +176,18 @@ function newsDetail() {
     }
   }
 
-  function makeComment(comments) {
-    var called = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  function makeComment(comments, called) {
+    if (called === void 0) {
+      called = 0;
+    }
+
     var commentString = [];
 
-    for (var _i = 0; _i < comments.length; _i++) {
-      commentString.push("\n      <div style=\"padding-left: ".concat(called * 40, "px;\" class=\"mt-4\">\n        <div class=\"text-gray-400\">\n          <i class=\"fa fa-sort-up mr-2\"></i>\n          <strong>").concat(comments[_i].user, "</strong> ").concat(comments[_i].time_ago, "\n        </div>\n        <p class=\"text-gray-700\">").concat(comments[_i].content, "</p>\n      </div>      \n    "));
+    for (var i = 0; i < comments.length; i++) {
+      commentString.push("\n      <div style=\"padding-left: ".concat(called * 40, "px;\" class=\"mt-4\">\n        <div class=\"text-gray-400\">\n          <i class=\"fa fa-sort-up mr-2\"></i>\n          <strong>").concat(comments[i].user, "</strong> ").concat(comments[i].time_ago, "\n        </div>\n        <p class=\"text-gray-700\">").concat(comments[i].content, "</p>\n      </div>      \n    "));
 
-      if (comments[_i].comments.length > 0) {
-        commentString.push(makeComment(comments[_i].comments, called + 1));
+      if (comments[i].comments.length > 0) {
+        commentString.push(makeComment(comments[i].comments, called + 1));
       }
     }
 
@@ -198,7 +198,6 @@ function newsDetail() {
 }
 
 function router() {
-  //현재 주소를 통해서 이벤트 핸들링
   var routePath = location.hash;
 
   if (routePath === '') {
@@ -241,7 +240,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53655" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54533" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -417,5 +416,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","app.js"], null)
-//# sourceMappingURL=/app.c328ef1a.js.map
+},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","app.ts"], null)
+//# sourceMappingURL=/app.c61986b1.js.map
